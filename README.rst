@@ -1,5 +1,16 @@
+.. role:: raw-html(raw)
+  :format: html
+
 =============================
 super-duper-computing-machine
 =============================
 
-LaTeX Parser and Evaluator
+$\\mathrm{\\LaTeX}$ Parser and Evaluator
+
++--------+-----------------------------------------------------------------------------+--------+
+| README | README                                                                      | README |
++========+=============================================================================+========+
+| Wait   | :raw-html:`<span style="font-weight: bold; font-style: italic;">No</span>`  | Wait   |
++--------+-----------------------------------------------------------------------------+--------+
+| :raw-html:`<span style="font-weight: bold; font-style: italic;">Can you stop</span>`          |
++-----------------------------------------------------------------------------------------------+
