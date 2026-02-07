@@ -15,17 +15,17 @@ class LatexTokenizer {
       if (this.peek() == '\\') {
         const testToken = new CommandParser(this.latexString, this.index).parseCommand();
         if (['\\times', '\\cdot', '\\ast', '\\div', '\\slash'].includes(testToken.commandName)) {
-          testToken.type == 'operator';
+          testToken.type = 'operator';
         } else if ((token => token == '\\left' || token == '\\right')(testToken.commandName)) {
-          testToken.type == 'delimiter command';
+          testToken.type = 'delimiter command';
         } else if (['\\lbrace', '\\rbrace', '\\lbrack', '\\rbrack'].includes(testToken.commandName)) {
-          testToken.type == 'delimiter';
+          testToken.type = 'delimiter';
         } else {
-          testToken.type == 'command';
+          testToken.type = 'command';
         }
         this.result.push(testToken)
         this.currentToken = '';
-      } else if (numberCondition(this.peek())) {
+      } else if (/\d/.test(this.peek())) {
         const testToken = new NumberParser(this.latexString, this.index).parseDigit();
         this.result.push(testToken);
         this.currentToken = '';
@@ -51,12 +51,13 @@ class LatexTokenizer {
           tokenType = 'group delimiter';
         } else {
           putToken = false;
+          this.eat();
         }
-        let ate = this.eat();
+        
         if (putToken) {
           this.result.push({
             'type': tokenType,
-            [tokenName]: ate
+            [tokenName]: this.eat()
           });
         }
       }
@@ -64,3 +65,4 @@ class LatexTokenizer {
     return this.result;
   }
 }
+
