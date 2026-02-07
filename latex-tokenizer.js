@@ -13,7 +13,9 @@ class LatexTokenizer {
   tokenize() {
     while (this.index < this.latexString.length) {
       if (this.peek() == '\\') {
-        const testToken = new CommandParser(this.latexString, this.index).parseCommand();
+        const parser = new CommandParser(this.latexString, this.index);
+        const testToken = parser.parseCommand();
+        this.index = parser.index();
         if (['\\times', '\\cdot', '\\ast', '\\div', '\\slash'].includes(testToken.commandName)) {
           testToken.type = 'operator';
         } else if ((token => token == '\\left' || token == '\\right')(testToken.commandName)) {
@@ -26,7 +28,9 @@ class LatexTokenizer {
         this.result.push(testToken)
         this.currentToken = '';
       } else if (/\d/.test(this.peek())) {
-        const testToken = new NumberParser(this.latexString, this.index).parseDigit();
+        const parser = new NumberParser(this.latexString, this.index);
+        const testToken = parser.parseNumber();
+        this.index = parser.index();
         this.result.push(testToken);
         this.currentToken = '';
       } else if ((peeked => ['(', ')', '[', ']'].includes(peeked))(this.peek())) {

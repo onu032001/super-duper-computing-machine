@@ -106,17 +106,6 @@ class CommandParser {
     while (this.firstTry ? testLetter.value == '\\' : testLetter.type != 'unknown') {
       result.commandName += testLetter.value;
       this.firstTry = false;
-    }
-    testLetter = this.parseLetter();
-    this.repetitionAmount = 0;
-    while (testLetter.type != 'unknown') {
-      result.commandName += testLetter.value;
-      testLetter = this.parseLetter();
-    }
-    testLetter = this.parseLetter();
-    this.repetitionAmount = 0;
-    while (testLetter.type != 'unknown') {
-      result.commandName += testLetter.value;
       testLetter = this.parseLetter();
     }
     return result;
