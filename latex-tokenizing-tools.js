@@ -39,10 +39,10 @@ class NumberParser {
       'value': ''
     };
     let testDigit = this.parseDigit();
-    if (testDigit.type != 'unknown') {
+    while (testDigit.type != 'unknown') {
       result.value += testDigit.value;
+      testDigit = this.parseDigit();
     }
-    testDigit = this.parseDigit();
     this.repetitionAmount = 0;
     while (testDigit.type != 'unknown') {
       result.value += testDigit.value;
