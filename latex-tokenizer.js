@@ -15,7 +15,7 @@ class LatexTokenizer {
       if (this.peek() == '\\') {
         const parser = new CommandParser(this.latexString, this.index);
         const testToken = parser.parseCommand();
-        this.index = parser.index();
+        this.index = parser.index;
         if (['\\times', '\\cdot', '\\ast', '\\div', '\\slash'].includes(testToken.commandName)) {
           testToken.type = 'operator';
         } else if ((token => token == '\\left' || token == '\\right')(testToken.commandName)) {
@@ -30,7 +30,7 @@ class LatexTokenizer {
       } else if (/\d/.test(this.peek())) {
         const parser = new NumberParser(this.latexString, this.index);
         const testToken = parser.parseNumber();
-        this.index = parser.index();
+        this.index = parser.index;
         this.result.push(testToken);
         this.currentToken = '';
       } else if ((peeked => ['(', ')', '[', ']'].includes(peeked))(this.peek())) {
