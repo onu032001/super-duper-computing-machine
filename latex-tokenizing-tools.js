@@ -83,30 +83,22 @@ class CommandParser {
       this.stopped = true;
     }
   }
-  parseLetter() {
-    if (/[A-Za-z]/.test(this.peek())) {
-      return {
-        'type': 'letter',
-        'value': this.eat()
-      }
-    } else {
-      let ate = this.eat();
-      return {
-        'type': 'unknown',
-        'value': ate
-      };
-    }
-  }
   parseCommand() {
     let result = {
       'type': 'command',
       'commandName': ''
     };
-    let testLetter = this.parseLetter();
-    while (this.firstTry ? testLetter.value == '\\' : testLetter.type != 'unknown') {
-      result.commandName += testLetter.value;
-      this.firstTry = false;
-      testLetter = this.parseLetter();
+    // Fix goes to Gemini
+    if (this.peek() === '\\') {
+      result.commandName += this.eat();
+    } else {
+      return { 'type': 'unknown', 'value': this.eat() };
+    }
+    while (this.index < this.latexString.length && /[A-Za-z]/.test(this.peek())) {
+      result.commandName += this.eat();
+    }
+    if (result.commandName === '\\' && this.index < this.latexString.length) {
+       result.commandName += this.eat();
     }
     return result;
   }
